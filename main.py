@@ -1,4 +1,7 @@
 import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Define the coefficients for different machines (example coefficients for lathe machine)
 coefficients = {
@@ -15,16 +18,40 @@ coefficients = {
         'Toilet Usage Cost': 0.04003480507607149
     },
     'Milling Machine': {
-        'Initial Cost': 0.000230,
-        'Space Occupied': 1.300,
-        'Power Rating': -0.0250,
-        'Time Spent': 400.0,
-        'Workpieces': 0.280,
-        'Operators': -85.0,
-        'Ventilation Cost': -0.160,
-        'Cleaning Cost': 1.2,
-        'Waste Management Cost': -1.5,
-        'Toilet Usage Cost': -0.009
+        'Initial Cost': 0.0008444683998909656,
+        'Space Occupied': 0.37965008701319825,
+        'Power Rating': 0.32631605467933955,
+        'Time Spent': 406.5041220927978,
+        'Workpieces': 4.540691290604314,
+        'Operators': -250.80477836446548,
+        'Ventilation Cost': -0.06533824398165722,
+        'Cleaning Cost': 0.30564880475519285,
+        'Waste Management Cost': -0.45646450783863113,
+        'Toilet Usage Cost': -0.05682205290169007
+    },
+    'Drilling Machine': {
+        'Initial Cost': 0.0008811454118560923,
+        'Space Occupied': -1.3291536349971844,
+        'Power Rating': 0.34074783975501166,
+        'Time Spent': 421.76580196132716,
+        'Workpieces': 22.633467305981846,
+        'Operators': 74.3906011948468,
+        'Ventilation Cost': 0.014096088617983726,
+        'Cleaning Cost': -0.05696711576000535,
+        'Waste Management Cost': -0.03183167891841876,
+        'Toilet Usage Cost': -0.1866917036962925
+    },
+    'Grounding Machine': {
+        'Initial Cost': 0.0010288561910239888,
+        'Space Occupied': -1.1066286541216819,
+        'Power Rating': 0.26439350427659036,
+        'Time Spent': 422.7564015070455,
+        'Workpieces': -27.967300562716243,
+        'Operators': 25.47044128146337,
+        'Ventilation Cost': 0.02776236843792823,
+        'Cleaning Cost': -0.44320158037384694,
+        'Waste Management Cost': 0.31620646252755336,
+        'Toilet Usage Cost': -0.08500903366631007
     },
     # Add coefficients for more machines here
 }
@@ -35,8 +62,8 @@ def calculate_price(machine, data):
     return price
 
 # Define the Streamlit interface
-st.title("Workshop Machine Price Calculator")
-st.write("A simple calculator to determine the price based on machine usage.")
+st.title("Workshop Machine Price Estimator")
+st.write("A simple estimator to determine the price based on machine usage.")
 
 # Dropdown for selecting the machine type
 machine = st.selectbox("Select Machine Type", ['Lathe Machine', 'Milling Machine', 'Grounding Machine', 'Drilling Machine'])  # Add more machines as needed
@@ -76,6 +103,24 @@ data = {
 }
 
 # Calculate and display the price
-if st.button("Calculate Price"):
+if st.button("Estimate Price"):
     price = calculate_price(machine, data)
-    st.success(f"The calculated price for {machine} is: ₦{price:,.2f}")
+    st.success(f"The estimated price for {machine} is: ₦{price:,.2f}")
+
+
+# Visualization of coefficients
+st.write(f"### Coefficients for {machine}:")
+coeff_data = pd.DataFrame(list(coefficients[machine].items()), columns=["Variable", "Coefficient"])
+
+st.write(coeff_data)
+# Create a barplot using Seaborn
+# fig, ax = plt.subplots()
+# sns.barplot(x="Coefficient", y="Variable", data=coeff_data, ax=ax, palette="coolwarm")
+
+# # Customize plot for better readability
+# ax.set_title(f"Visualizing Coefficients for {machine}")
+# ax.set_xlabel("Coefficient Value")
+# ax.set_ylabel("Variable")
+
+# # Display the chart in Streamlit
+# st.pyplot(fig)
