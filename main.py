@@ -17,6 +17,18 @@ coefficients = {
         'Waste Management Cost': -0.24896513218323035,
         'Toilet Usage Cost': 0.04003480507607149
     },
+    # 'Lathe Machine': {
+    #     'Initial Cost': 0.0021354470349066682,
+    #     'Space Occupied': -2.61612541356795,
+    #     'Power Rating': 1.149638260612507,
+    #     'Time Spent': 468.51710915382426,
+    #     'Workpieces': 21.69563815226035,
+    #     'Operators': 76.13204634808838,
+    #     'Ventilation Cost': 0.021944294186857505,
+    #     'Cleaning Cost': 0.06706617721440011,
+    #     'Waste Management Cost': -0.11152782346905354,
+    #     'Toilet Usage Cost': 0.13281861336268186
+    # },
     'Milling Machine': {
         'Initial Cost': 0.0008444683998909656,
         'Space Occupied': 0.37965008701319825,
@@ -63,7 +75,7 @@ def calculate_price(machine, data):
 
 # Define the Streamlit interface
 st.title("Workshop Machine Price Estimator")
-st.write("A simple estimator to determine the price based on machine usage.")
+st.write("A simple estimator to determine the price based on machine usage using Multiple Linear Regression.")
 
 # Dropdown for selecting the machine type
 machine = st.selectbox("Select Machine Type", ['Lathe Machine', 'Milling Machine', 'Grounding Machine', 'Drilling Machine'])  # Add more machines as needed
@@ -105,7 +117,7 @@ data = {
 # Calculate and display the price
 if st.button("Estimate Price"):
     price = calculate_price(machine, data)
-    st.success(f"The estimated price for {machine} is: ₦{price:,.2f}")
+    st.success(f"The estimated price for {machine} usage is: ₦{price:,.2f}")
 
 
 # Visualization of coefficients
